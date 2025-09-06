@@ -46,6 +46,8 @@ export default function Index() {
 
   const onReset = () => {
     setShowAppOptions(false);
+    setSelectedImage(undefined);
+    setPickedEmoji(undefined);
   };
 
   const onAddSticker = () => {
@@ -94,13 +96,14 @@ export default function Index() {
     <GestureHandlerRootView style={styles.container}>
       <View
         style={styles.container}
-        ref={imageRef as RefObject<View>}
       >
         <View style={styles.imageContainer} />
-        <ImageViewer imgSource={PlaceholderImage} selectedImage={selectedImage} />
-        {pickedEmoji && <EmojiSticker imageSize={40} stickerSource={pickedEmoji} />}
+        <View ref={imageRef as RefObject<View>}>
+          <ImageViewer imgSource={PlaceholderImage} selectedImage={selectedImage} />
+          {pickedEmoji && <EmojiSticker imageSize={40} stickerSource={pickedEmoji} />}
+        </View>
         {showAppOptions ? (
-          <View style={styles.optionsContainer}>
+          <View style={styles.footerContainer}>
             <View style={styles.optionsRow}>
               <IconButton icon="refresh" label="Reset" onPress={onReset} />
               <CircleButton onPress={onAddSticker} />
@@ -119,7 +122,7 @@ export default function Index() {
           <EmojiList onSelect={setPickedEmoji} onCloseModal={onModalClose} />
         </EmojiPicker>
       </View >
-    </GestureHandlerRootView>
+    </GestureHandlerRootView >
   )
 }
 
@@ -139,9 +142,7 @@ const styles = StyleSheet.create({
     flex: 3,
     alignItems: 'center',
     margin: 28,
-  },
-  optionsContainer: {
-    flex: 3,
+    marginBottom: 150,
   },
   optionsRow: {
     alignItems: 'center',
